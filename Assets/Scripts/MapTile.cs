@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class MapTile : MonoBehaviour
 {
+    // Start is called before the first frame update
     void Start()
     {
-        var _rndr = GetComponent<SpriteRenderer>();
+        
     }
 
     // Update is called once per frame
