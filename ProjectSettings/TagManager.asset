@@ -44,3 +44,6 @@ TagManager:
   - name: Map
     uniqueID: 1016673449
     locked: 0
+  - name: Buildings
+    uniqueID: 4023563933
+    locked: 0
