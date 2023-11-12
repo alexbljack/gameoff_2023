@@ -3,25 +3,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Building : MonoBehaviour
-{
-    public int wood_speed;
-    public int wood_amount;
 
-    int _woodTicksPassed;
+public enum ResourceType
+{
+    Wood,
+    Money,
+    Stone
+}
+
+
+[Serializable]
+public class ResourceGenerator
+{
+    public ResourceType resource;
+    public int amount;
+    public int ticks;
     
-    void Start()
+    public static event Action<ResourceType, int> ResourceGenerated;
+
+    int _ticksPassed = 0;
+
+    public void OnTick()
     {
-        _woodTicksPassed = 0;
+        _ticksPassed += 1;
+        if (_ticksPassed >= ticks)
+        {
+            Generate();
+            _ticksPassed = 0;
+        }
     }
 
+    void Generate()
+    {
+        Debug.Log($"Generating {amount} {resource}");
+        ResourceGenerated?.Invoke(resource, amount);
+    }
+}
+
+public class Building : MonoBehaviour
+{
+    public List<ResourceGenerator> resources;
+    
     void OnGameTick()
     {
-        _woodTicksPassed += 1;
-        if (_woodTicksPassed >= wood_speed)
+        foreach (ResourceGenerator resource in resources)
         {
-            Debug.Log($"Generating {wood_amount}");
-            _woodTicksPassed = 0;
+            resource.OnTick();
         }
     }
 
