@@ -42,6 +42,7 @@ public class MapGrid : MonoBehaviour
                 Vector2Int position = new Vector2Int(i, j);
                 var tileComponent = tile.GetComponent<MapTile>();
                 tileComponent.Init(position);
+                tile.transform.SetParent(transform);
                 tile.transform.position = position - center;
                 _tiles[new Vector2Int(i, j)] = tileComponent;
                 if ((position.x > center.x - 2 && position.x < center.x + 2) 
@@ -55,9 +56,9 @@ public class MapGrid : MonoBehaviour
 
     void OnTileBuilt(MapTile tile)
     {
-        for (int i = tile.Position.x - 1; i < tile.Position.x + 1; i++)
+        for (int i = tile.Position.x - 1; i < tile.Position.x + 2; i++)
         {
-            for (int j = tile.Position.y - 1; j < tile.Position.y + 1; j++)
+            for (int j = tile.Position.y - 1; j < tile.Position.y + 2; j++)
             {
                 MapTile neighbour = _tiles[new Vector2Int(i, j)];
                 if (!neighbour.Opened)

@@ -25,6 +25,7 @@ public class MapTile : MonoBehaviour
     public void Init(Vector2Int position)
     {
         _position = position;
+        name = $"Tile {position.x}x{position.y}";
     }
 
     void Awake()
@@ -48,7 +49,7 @@ public class MapTile : MonoBehaviour
 
     void OnMouseEnter()
     {
-        Debug.Log("Entered");
+        // Debug.Log("Entered");
     }
 
     void OnMouseDown()
