@@ -42,6 +42,7 @@ public class ResourceGenerator
 
 public class Building : MonoBehaviour
 {
+    public float timeToBuild = 1f;
     public List<ResourceGenerator> resources;
     
     void OnGameTick()

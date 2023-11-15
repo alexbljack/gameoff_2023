@@ -5,7 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public float tick_length = 1f;
-    public static event Action GameTicked; 
+    public static event Action GameTicked;
+    
     public bool is_paused;
 
     public int wood = 0;

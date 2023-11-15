@@ -16,4 +16,5 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 67a9074ca76e34b99b17178edf5e152e, type: 3}
   - {fileID: 21300000, guid: 5e747f84cbf2c4a649070796a99e219f, type: 3}
   - {fileID: 21300000, guid: 21574416c296c42e694ce79b7105d64a, type: 3}
-  isPassable: 1
+  buildingsAvailable:
+  - {fileID: 8010416505843055800, guid: 6ee191f92a0724e17a0d887647906ecf, type: 3}

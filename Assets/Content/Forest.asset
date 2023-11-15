@@ -15,4 +15,6 @@ MonoBehaviour:
   tiles:
   - {fileID: 21300000, guid: cbb1765d997cd456fbc3c9db4eca19d3, type: 3}
   - {fileID: 21300000, guid: 783916751c677493a8131f635e8d102e, type: 3}
-  isPassable: 1
+  buildingsAvailable:
+  - {fileID: 1036701362685875418, guid: 5e0a5dfa9e3d1404f8a91b480c32f6cc, type: 3}
+  - {fileID: 8010416505843055800, guid: 6ee191f92a0724e17a0d887647906ecf, type: 3}

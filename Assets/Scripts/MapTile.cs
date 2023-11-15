@@ -1,13 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 public class MapTile : MonoBehaviour
 {
     public static event Action<MapTile> BuiltOnTile;
-    
+
     public TileType plain;
     public TileType rocks;
     public TileType forest;
@@ -17,6 +19,7 @@ public class MapTile : MonoBehaviour
     Vector2Int _position = Vector2Int.zero;
     bool _opened = false;
     bool _occupied = false;
+    TileType _type;
 
     public Vector2Int Position => _position;
     public bool Opened => _opened;
@@ -36,7 +39,8 @@ public class MapTile : MonoBehaviour
     public void Open()
     {
         _opened = true;
-        _renderer.sprite = ChooseTile().PickRandom();
+        _type = ChooseTile();
+        _renderer.sprite = _type.PickRandom();
     }
 
     TileType ChooseTile()
@@ -47,16 +51,29 @@ public class MapTile : MonoBehaviour
         return plain;
     }
 
-    void OnMouseEnter()
+    public void Build(GameObject building)
     {
-        // Debug.Log("Entered");
+        GameObject construction = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Buildings/Construction.prefab"); 
+        GameObject obj = Instantiate(construction);
+        obj.transform.position = transform.position;
+        obj.transform.SetParent(gameObject.transform);
+        obj.GetComponent<Construction>().Build(building, this);
+        _occupied = true;
+    }
+
+    public void FinishBuilding()
+    {
+        BuiltOnTile?.Invoke(this);
+    }
+
+    public bool CanBuild(GameObject building)
+    {
+        if (!_opened || _occupied) { return false; }
+        return _type.buildingsAvailable.Contains(building);
     }
 
     void OnMouseDown()
     {
-        if (_opened)
-        {
-            BuiltOnTile?.Invoke(this);
-        }
+        
     }
 }

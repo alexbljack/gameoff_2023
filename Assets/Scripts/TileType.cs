@@ -6,7 +6,7 @@ using UnityEngine;
 public class TileType : ScriptableObject
 {
     public List<Sprite> tiles;
-    public bool isPassable;
+    public List<GameObject> buildingsAvailable;
 
     public Sprite PickRandom()
     {
