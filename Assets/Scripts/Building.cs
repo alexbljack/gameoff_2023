@@ -4,14 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum ResourceType
-{
-    Wood,
-    Money,
-    Stone
-}
-
-
 [Serializable]
 public class ResourceGenerator
 {
@@ -40,11 +32,21 @@ public class ResourceGenerator
     }
 }
 
+
+[Serializable]
+public class ResourceCost
+{
+    public ResourceType resource;
+    public int cost;
+}
+
+
 public class Building : MonoBehaviour
 {
     public float timeToBuild = 1f;
     public List<ResourceGenerator> resources;
-    
+    public List<ResourceCost> buildCost;
+
     void OnGameTick()
     {
         foreach (ResourceGenerator resource in resources)

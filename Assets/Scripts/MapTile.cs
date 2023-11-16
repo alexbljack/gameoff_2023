@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 public class MapTile : MonoBehaviour
 {
     public static event Action<MapTile> BuiltOnTile;
+    public static event Action<ResourceType, int> SpentResourcesOnBuilding; 
 
     public TileType plain;
     public TileType rocks;
@@ -59,6 +60,10 @@ public class MapTile : MonoBehaviour
         obj.transform.SetParent(gameObject.transform);
         obj.GetComponent<Construction>().Build(building, this);
         _occupied = true;
+        foreach (var cost in building.GetComponent<Building>().buildCost)
+        {
+            SpentResourcesOnBuilding?.Invoke(cost.resource, -cost.cost);
+        }
     }
 
     public void FinishBuilding()
