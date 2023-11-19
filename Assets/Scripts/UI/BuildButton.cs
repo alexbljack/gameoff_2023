@@ -1,25 +1,34 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BuildButton : MonoBehaviour
 {
-    public GameObject buildingPrefab;
-    public static event Action<GameObject> BuildButtonClicked;
+    [SerializeField] BuildingType buildingType;
+    public static event Action<BuildingType> BuildButtonClicked;
 
+    Image _image;
     Button _btn;
-    
-    void Start()
+
+    void Awake()
     {
         _btn = GetComponent<Button>();
+        _image = GetComponent<Image>();
+    }
+
+    void Start()
+    {
         _btn.onClick.AddListener(OnClick);
+    }
+
+    public void Init(BuildingType building)
+    {
+        buildingType = building;
+        _image.sprite = buildingType.Image;
     }
 
     void OnClick()
     {
-        Debug.Log(buildingPrefab);
-        BuildButtonClicked?.Invoke(buildingPrefab);
+        BuildButtonClicked?.Invoke(buildingType);
     }
 }

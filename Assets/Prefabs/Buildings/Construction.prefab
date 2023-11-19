@@ -147,7 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfd55f4e4b9a4925a52f595c18922ed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingPrefab: {fileID: 0}
+  buildingPrefab: {fileID: 9117467386451046447, guid: 8203570e35c6043d796f1b25e138a2e3, type: 3}
+  buildingType: {fileID: 0}
   tile: {fileID: 0}
 --- !u!212 &3564753286904352870
 SpriteRenderer:
@@ -190,8 +191,8 @@ SpriteRenderer:
   m_SortingLayerID: -271403363
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 693739c66c5a44bc9a500b75607373ea, type: 3}
-  m_Color: {r: 0.33962262, g: 0.26432893, b: 0.26432893, a: 0.9490196}
+  m_Sprite: {fileID: 21300000, guid: 9f29726fc41e449a98ad84c803aaa038, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.9490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

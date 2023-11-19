@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Rocks
   m_EditorClassIdentifier: 
   tiles:
-  - {fileID: 21300000, guid: ca0e64c265bd34344ac4c8afcecdee71, type: 3}
-  - {fileID: 21300000, guid: acbaa8d50379d4f7992e7973e201ed5b, type: 3}
-  - {fileID: 21300000, guid: 16d544fa2d76840c8a5e53a8aeeee314, type: 3}
-  - {fileID: 21300000, guid: f10abba27da3543c894d6d67d689ac9b, type: 3}
+  - {fileID: 21300000, guid: 193a8f1ccd7a04ed190933d2d9b7a03e, type: 3}
+  - {fileID: 21300000, guid: 55bf1ff27699a4fbbae45a5f79745acb, type: 3}
+  - {fileID: 21300000, guid: 06d8bc8fa743b4a509505c06789e17c3, type: 3}
   buildingsAvailable:
-  - {fileID: 8010416505843055800, guid: 6ee191f92a0724e17a0d887647906ecf, type: 3}
   - {fileID: 1466886017418610559, guid: 9fde20775633b4a8582d1c441c6bb649, type: 3}
