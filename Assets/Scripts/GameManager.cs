@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -37,16 +38,36 @@ public struct ResourceHolder
 
 public class GameManager : MonoBehaviour
 {
-    public float tick_length = 1f;
-    public static event Action GameTicked;
-    
-    public bool is_paused;
+    public static event Action<int> PopulationChanged;
+    public static event Action<int> HousingChanged;
+    public static event Action<float> LoyaltyChanged; 
 
     public List<ResourceHolder> resourceSetup;
-    public Dictionary<ResourceType, Resource> Resources => _resources;
+    public float populationIncreaseStep = 2;
+    public ResourceType foodResource;
+    public int foodConsumptionPerCitizen = 1;
+    public float foodConsumptionStep = 10;
+    public float housingLoyaltyDecreaseRate = 5f;
 
+    [Header("UI")] 
+    [SerializeField] PopulationInfo populationUI;
+    [SerializeField] LoyaltyInfo loyaltyUI;
+    
+    int _population = 1;
+    float _loyalty = 50f;
     Dictionary<ResourceType, Resource> _resources;
+    
+    bool _gameOver = false;
+    
+    public Dictionary<ResourceType, Resource> Resources => _resources;
+    public int Population => _population;
+    public float Loyalty => _loyalty;
 
+    public int Housing => GameObject
+        .FindGameObjectsWithTag("Building")
+        .Select(b => b.GetComponent<Building>().buildingType.Housing)
+        .Sum();
+    
     void Awake()
     {
         _resources = new Dictionary<ResourceType, Resource>();
@@ -58,19 +79,58 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(GameTickLoop());
+        StartCoroutine(PopulationRoutine());
+        StartCoroutine(ConsumeFoodRoutine());
+        InitUI();
+    }
+
+    void Update()
+    {
+        if (Population > Housing)
+        {
+            _loyalty -= housingLoyaltyDecreaseRate * Time.deltaTime;
+            LoyaltyChanged?.Invoke(Loyalty);
+        }
+    }
+
+    IEnumerator PopulationRoutine()
+    {
+        while (!_gameOver)
+        {
+            _population += 1;
+            PopulationChanged?.Invoke(_population);
+            yield return new WaitForSeconds(populationIncreaseStep);
+        }
+    }
+
+    IEnumerator ConsumeFoodRoutine()
+    {
+        while (!_gameOver)
+        {
+            yield return new WaitForSeconds(foodConsumptionStep);
+            int consumeAmount = _population * foodConsumptionPerCitizen;
+            _resources[foodResource].Change(-consumeAmount);
+        }
+    }
+
+    void InitUI()
+    {
+        populationUI.Init(this);
+        loyaltyUI.Init(this);
     }
 
     void OnEnable()
     {
-        ResourceGenerator.ResourceGenerated += OnChangeResource;
+        Building.ResourceGenerated += OnChangeResource;
         MapTile.SpentResourcesOnBuilding += OnChangeResource;
+        Building.BuildingCreated += OnBuildingCreated;
     }
 
     void OnDisable()
     {
-        ResourceGenerator.ResourceGenerated -= OnChangeResource;
+        Building.ResourceGenerated -= OnChangeResource;
         MapTile.SpentResourcesOnBuilding -= OnChangeResource;
+        Building.BuildingCreated -= OnBuildingCreated;
     }
 
     void OnChangeResource(ResourceType resource, int amount)
@@ -80,12 +140,8 @@ public class GameManager : MonoBehaviour
         _resources[resource].Change(amount);
     }
 
-    IEnumerator GameTickLoop()
+    void OnBuildingCreated()
     {
-        while (!is_paused)
-        {
-            yield return new WaitForSeconds(tick_length);
-            GameTicked?.Invoke();
-        }
+        HousingChanged?.Invoke(Housing);
     }
 }

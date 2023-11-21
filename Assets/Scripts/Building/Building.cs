@@ -2,13 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 
 public class Building : MonoBehaviour
 {
-    [SerializeField] BuildingType buildingType;
+    public static event Action<ResourceType, int> ResourceGenerated;
+    public static event Action BuildingCreated;
+    public static event Action BuildingDestroyed;
+    
+    public BuildingType buildingType;
 
     SpriteRenderer _rndr;
+    bool _generatingResources = true;
 
     void Awake()
     {
@@ -19,23 +25,21 @@ public class Building : MonoBehaviour
     {
         buildingType = building;
         _rndr.sprite = buildingType.Image;
-    }
-    
-    void OnGameTick()
-    {
-        foreach (ResourceGenerator resource in buildingType.Resources)
+        BuildingCreated?.Invoke();
+        
+        foreach (ResourceGenerator generator in building.Resources)
         {
-            resource.OnTick();
+            StartCoroutine(GenerateResourceRoutine(generator.resource, generator.amount, generator.timeStep));
         }
     }
 
-    void OnEnable()
+    IEnumerator GenerateResourceRoutine(ResourceType resource, int amount, float delay)
     {
-        GameManager.GameTicked += OnGameTick;
-    }
-
-    void OnDisable()
-    {
-        GameManager.GameTicked -= OnGameTick;
+        while (_generatingResources)
+        {
+            yield return new WaitForSeconds(delay);
+            Debug.Log($"Generating {amount} {resource}");
+            ResourceGenerated?.Invoke(resource, amount);
+        } 
     }
 }

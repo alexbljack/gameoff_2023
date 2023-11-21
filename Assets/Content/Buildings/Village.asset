@@ -12,3 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60db4eef2f2f2427d964ee7c054e99ae, type: 3}
   m_Name: Village
   m_EditorClassIdentifier: 
+  image: {fileID: 21300000, guid: 9ba692e8deac941d9842b090ccaf71a5, type: 3}
+  timeToBuild: 1
+  cost: []
+  resources:
+  - resource: {fileID: 11400000, guid: 2024c4a819e6147c7ae07f5df5c822f9, type: 2}
+    amount: 50
+    timeStep: 5
+  housing: 4

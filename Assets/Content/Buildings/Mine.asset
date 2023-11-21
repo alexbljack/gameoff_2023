@@ -12,3 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60db4eef2f2f2427d964ee7c054e99ae, type: 3}
   m_Name: Mine
   m_EditorClassIdentifier: 
+  image: {fileID: 21300000, guid: c67ba5e4701c04abba78d33190ad87a5, type: 3}
+  timeToBuild: 1
+  cost:
+  - resource: {fileID: 11400000, guid: 2024c4a819e6147c7ae07f5df5c822f9, type: 2}
+    cost: 10
+  - resource: {fileID: 11400000, guid: 6cf8f0f4c31ae452ab424642ed264610, type: 2}
+    cost: 5
+  - resource: {fileID: 11400000, guid: 3427d05086da24d7085e598b7ca65094, type: 2}
+    cost: 8
+  resources:
+  - resource: {fileID: 11400000, guid: 3427d05086da24d7085e598b7ca65094, type: 2}
+    amount: 5
+    timeStep: 2
+  housing: 0
