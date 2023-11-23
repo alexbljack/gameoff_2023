@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
     [Header("UI")] 
     [SerializeField] PopulationInfo populationUI;
     [SerializeField] LoyaltyInfo loyaltyUI;
+    [SerializeField] EventModal eventModal;
     
     int _population = 1;
     float _loyalty = 50f;
@@ -124,6 +125,8 @@ public class GameManager : MonoBehaviour
         Building.ResourceGenerated += OnChangeResource;
         MapTile.SpentResourcesOnBuilding += OnChangeResource;
         Building.BuildingCreated += OnBuildingCreated;
+        RandomEventManager.RandomEventTriggered += OnRandomEvent;
+        EventChoiceButton.EventOutcomeSelected += OnEventChoice;
     }
 
     void OnDisable()
@@ -131,6 +134,8 @@ public class GameManager : MonoBehaviour
         Building.ResourceGenerated -= OnChangeResource;
         MapTile.SpentResourcesOnBuilding -= OnChangeResource;
         Building.BuildingCreated -= OnBuildingCreated;
+        RandomEventManager.RandomEventTriggered -= OnRandomEvent;
+        EventChoiceButton.EventOutcomeSelected -= OnEventChoice;
     }
 
     void OnChangeResource(ResourceType resource, int amount)
@@ -143,5 +148,16 @@ public class GameManager : MonoBehaviour
     void OnBuildingCreated()
     {
         HousingChanged?.Invoke(Housing);
+    }
+
+    void OnRandomEvent(EventData eventData)
+    {
+        eventModal.gameObject.SetActive(true);
+        eventModal.BuildEventWindow(eventData);
+    }
+
+    void OnEventChoice(EventChoice choice)
+    {
+        eventModal.gameObject.SetActive(false);
     }
 }

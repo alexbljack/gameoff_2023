@@ -13,6 +13,7 @@ public class BuildingsPanel : MonoBehaviour
             GameObject button = Instantiate(buildButtonPrefab);
             button.transform.SetParent(transform);
             button.GetComponent<BuildButton>().Init(building);
+            button.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         }
     }
 }

@@ -22,8 +22,9 @@ public class EventChoice
 [CreateAssetMenu]
 public class EventData : ScriptableObject
 {
-    [TextAreaAttribute]
-    [SerializeField] string eventText;
-    
+    [TextArea][SerializeField] string eventText;
     [SerializeField] List<EventChoice> choices;
+
+    public string Description => eventText;
+    public List<EventChoice> Choices => choices;
 }
