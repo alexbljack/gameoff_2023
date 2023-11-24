@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RandomEventManager : MonoBehaviour
@@ -8,14 +7,36 @@ public class RandomEventManager : MonoBehaviour
     public static event Action<EventData> RandomEventTriggered;
     
     [SerializeField] EventData randomEvent;
-    
+    [SerializeField] float eventDelay;
+
     void Start()
     {
-        RandomEventTriggered?.Invoke(randomEvent);
+        StartCoroutine(RandomEventRoutine());
     }
 
-    void Update()
+    IEnumerator RandomEventRoutine()
     {
-        
+        yield return new WaitForSeconds(eventDelay);
+        TriggerEvent(randomEvent);
+    }
+
+    void TriggerEvent(EventData eventData)
+    {
+        RandomEventTriggered?.Invoke(eventData);
+    }
+
+    void OnChoiceSelected(EventChoice choice)
+    {
+        StartCoroutine(RandomEventRoutine());
+    }
+
+    void OnEnable()
+    {
+        EventChoiceButton.EventOutcomeSelected += OnChoiceSelected;
+    }
+
+    void OnDisable()
+    {
+        EventChoiceButton.EventOutcomeSelected -= OnChoiceSelected;
     }
 }

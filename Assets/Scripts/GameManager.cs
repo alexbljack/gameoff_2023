@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using Random = UnityEngine.Random;
 
 public class Resource
 {
@@ -59,15 +59,16 @@ public class GameManager : MonoBehaviour
     Dictionary<ResourceType, Resource> _resources;
     
     bool _gameOver = false;
+    bool _paused = false;
     
     public Dictionary<ResourceType, Resource> Resources => _resources;
     public int Population => _population;
     public float Loyalty => _loyalty;
 
-    public int Housing => GameObject
-        .FindGameObjectsWithTag("Building")
-        .Select(b => b.GetComponent<Building>().buildingType.Housing)
-        .Sum();
+    public List<Building> Buildings => GameObject.FindGameObjectsWithTag("Building")
+        .Select(b => b.GetComponent<Building>()).ToList();
+    
+    public int Housing => Buildings.Select(b => b.buildingType.Housing).Sum();
     
     void Awake()
     {
@@ -89,8 +90,7 @@ public class GameManager : MonoBehaviour
     {
         if (Population > Housing)
         {
-            _loyalty -= housingLoyaltyDecreaseRate * Time.deltaTime;
-            LoyaltyChanged?.Invoke(Loyalty);
+            ChangeLoyalty(-housingLoyaltyDecreaseRate * Time.deltaTime);
         }
     }
 
@@ -98,8 +98,7 @@ public class GameManager : MonoBehaviour
     {
         while (!_gameOver)
         {
-            _population += 1;
-            PopulationChanged?.Invoke(_population);
+            ChangePopulation(1);
             yield return new WaitForSeconds(populationIncreaseStep);
         }
     }
@@ -138,11 +137,28 @@ public class GameManager : MonoBehaviour
         EventChoiceButton.EventOutcomeSelected -= OnEventChoice;
     }
 
-    void OnChangeResource(ResourceType resource, int amount)
+    void ChangeResource(ResourceType resource, int amount)
     {
         string action = amount >= 0 ? "Received" : "Spent";  
         Debug.Log($"{action} {amount} of {resource}");
         _resources[resource].Change(amount);
+    }
+
+    void ChangePopulation(int amount)
+    {
+        _population += amount;
+        PopulationChanged?.Invoke(_population);
+    }
+
+    void ChangeLoyalty(float amount)
+    {
+        _loyalty += amount;
+        LoyaltyChanged?.Invoke(Loyalty);
+    }
+ 
+    void OnChangeResource(ResourceType resource, int amount)
+    {
+        ChangeResource(resource, amount);
     }
 
     void OnBuildingCreated()
@@ -154,10 +170,24 @@ public class GameManager : MonoBehaviour
     {
         eventModal.gameObject.SetActive(true);
         eventModal.BuildEventWindow(eventData);
+        
     }
 
     void OnEventChoice(EventChoice choice)
     {
+        foreach (EventResMod mod in choice.resources) { ChangeResource(mod.resource, mod.amount); }
+        ChangePopulation(choice.populationChange);
+        ChangeLoyalty(choice.loyaltyChange);
         eventModal.gameObject.SetActive(false);
+
+        if (choice.destroyBuilding)
+        {
+            var buildings = Buildings.FindAll(b => b.buildingType == choice.destroyBuilding);
+            if (buildings.Count > 0)
+            {
+                var building = buildings[Random.Range(0, buildings.Count)];
+                building.DestroyBuilding();
+            }
+        }
     }
 }

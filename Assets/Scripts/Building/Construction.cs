@@ -27,7 +27,7 @@ public class Construction : MonoBehaviour
         GameObject building = Instantiate(buildingPrefab);
         building.transform.position = tile.transform.position;
         building.transform.SetParent(tile.gameObject.transform);
-        building.GetComponent<Building>().Init(buildingType);
+        building.GetComponent<Building>().Init(buildingType, tile);
         tile.FinishBuilding();
         Destroy(gameObject);
     }

@@ -9,7 +9,7 @@ public class EventModal : MonoBehaviour
 
     public void BuildEventWindow(EventData eventData)
     {
-        eventText.text = eventData.Description;
+        eventText.text = eventData.Description[Random.Range(0, eventData.Description.Count)];
         
         foreach (Transform child in buttonGroup) {
             Destroy(child.gameObject);

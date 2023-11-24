@@ -14,7 +14,7 @@ public class EventChoice
 {
     public string choiceText;
     public float loyaltyChange;
-    public float populationChange;
+    public int populationChange;
     public BuildingType destroyBuilding;
     public List<EventResMod> resources;
 }
@@ -22,9 +22,9 @@ public class EventChoice
 [CreateAssetMenu]
 public class EventData : ScriptableObject
 {
-    [TextArea][SerializeField] string eventText;
+    [TextArea][SerializeField] List<string> eventText;
     [SerializeField] List<EventChoice> choices;
 
-    public string Description => eventText;
+    public List<string> Description => eventText;
     public List<EventChoice> Choices => choices;
 }

@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81ba983053114741930dfafc19ce5bf1, type: 3}
-  m_Name: New Event Data
+  m_Name: Event_1
   m_EditorClassIdentifier: 
-  eventText: YOU DIED!!!!
+  eventText:
+  - YOUR DIED
+  - Heaven shall burrn!
   choices:
   - choiceText: Drink heal potion
-    loyaltyChange: 2.5
-    populationChange: -1
+    loyaltyChange: -10
+    populationChange: -2
     destroyBuilding: {fileID: 11400000, guid: c8bf625f0a18e4a99a7fb9e34a549358, type: 2}
     resources:
     - resource: {fileID: 11400000, guid: 2024c4a819e6147c7ae07f5df5c822f9, type: 2}

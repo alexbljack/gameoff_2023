@@ -15,15 +15,17 @@ public class Building : MonoBehaviour
 
     SpriteRenderer _rndr;
     bool _generatingResources = true;
+    MapTile _tile;
 
     void Awake()
     {
         _rndr = GetComponent<SpriteRenderer>();
     }
 
-    public void Init(BuildingType building)
+    public void Init(BuildingType building, MapTile tile)
     {
         buildingType = building;
+        _tile = tile;
         _rndr.sprite = buildingType.Image;
         BuildingCreated?.Invoke();
         
@@ -41,5 +43,12 @@ public class Building : MonoBehaviour
             Debug.Log($"Generating {amount} {resource}");
             ResourceGenerated?.Invoke(resource, amount);
         } 
+    }
+
+    public void DestroyBuilding()
+    {
+        BuildingDestroyed?.Invoke();
+        _tile.Free();
+        Destroy(gameObject);
     }
 }

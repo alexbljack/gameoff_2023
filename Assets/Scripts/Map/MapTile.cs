@@ -74,8 +74,8 @@ public class MapTile : MonoBehaviour
         return _type.buildingsAvailable.Contains(building);
     }
 
-    void OnMouseDown()
+    public void Free()
     {
-        
+        _occupied = false;
     }
 }
