@@ -5,9 +5,11 @@ using Random = UnityEngine.Random;
 
 public class MapTile : MonoBehaviour
 {
+    public static event Action<MapTile> CursorEnteredTile;
+    public static event Action<MapTile> CursorLeftTile; 
     public static event Action<MapTile> BuiltOnTile;
-    public static event Action<ResourceType, int> SpentResourcesOnBuilding; 
-
+    public static event Action<ResourceType, int> SpentResourcesOnBuilding;
+    
     public TileType plain;
     public TileType rocks;
     public TileType forest;
@@ -77,5 +79,15 @@ public class MapTile : MonoBehaviour
     public void Free()
     {
         _occupied = false;
+    }
+
+    public void OnMouseEnter()
+    {
+        CursorEnteredTile?.Invoke(this);
+    }
+
+    public void OnMouseExit()
+    {
+        CursorLeftTile?.Invoke(this);
     }
 }

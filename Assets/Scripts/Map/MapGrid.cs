@@ -7,6 +7,7 @@ using UnityEngine;
 public class MapGrid : MonoBehaviour
 {
     public GameObject tilePrefab;
+    public GameObject selector;
     public Vector2 mapSize;
     
     Dictionary<Vector2, MapTile> _tiles;
@@ -24,11 +25,15 @@ public class MapGrid : MonoBehaviour
     void OnEnable()
     {
         MapTile.BuiltOnTile += OnTileBuilt;
+        MapTile.CursorEnteredTile += OnEnterTile;
+        MapTile.CursorLeftTile += OnLeftTile;
     }
     
     void OnDisable()
     {
         MapTile.BuiltOnTile -= OnTileBuilt;
+        MapTile.CursorEnteredTile -= OnEnterTile;
+        MapTile.CursorLeftTile -= OnLeftTile;
     }
 
     void InitMap()
@@ -67,5 +72,16 @@ public class MapGrid : MonoBehaviour
                 }
             }
         }
+    }
+
+    void OnEnterTile(MapTile tile)
+    {
+        selector.SetActive(true);
+        selector.transform.position = tile.transform.position;
+    }
+
+    void OnLeftTile(MapTile tile)
+    {
+        selector.SetActive(false);
     }
 }

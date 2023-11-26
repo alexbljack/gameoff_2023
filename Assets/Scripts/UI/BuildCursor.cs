@@ -1,12 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildCursor : MonoBehaviour
 {
     SpriteRenderer _rndr;
-    Collider2D _collider;
     BuildingType _building;
     MapTile _overTile;
 
@@ -15,7 +11,6 @@ public class BuildCursor : MonoBehaviour
     void Awake()
     {
         _rndr = GetComponent<SpriteRenderer>();
-        _collider = GetComponent<Collider2D>();
     }
 
     void Start()
@@ -26,11 +21,13 @@ public class BuildCursor : MonoBehaviour
     void OnEnable()
     {
         BuildButton.BuildButtonClicked += EnterBuildMode;
+        MapTile.CursorEnteredTile += OnEnterTile;
     }
 
     void OnDisable()
     {
         BuildButton.BuildButtonClicked -= EnterBuildMode;
+        MapTile.CursorEnteredTile -= OnEnterTile;
     }
 
     void Update()
@@ -64,7 +61,6 @@ public class BuildCursor : MonoBehaviour
     {
         _rndr.sprite = building.Image;
         _building = building;
-        _collider.enabled = true;
         _buildMode = true;
     }
 
@@ -72,7 +68,6 @@ public class BuildCursor : MonoBehaviour
     {
         _rndr.sprite = null;
         _building = null;
-        _collider.enabled = false;
         _buildMode = false;
     }
 
@@ -82,12 +77,10 @@ public class BuildCursor : MonoBehaviour
         _rndr.color = color;
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    void OnEnterTile(MapTile tile)
     {
-        if (col.TryGetComponent(out MapTile tile))
-        {
-            _overTile = tile;
-            Highlight(tile.CanBuild(_building));
-        }
+        _overTile = tile;
+        Debug.Log(_overTile);
+        Highlight(tile.CanBuild(_building));
     }
 }

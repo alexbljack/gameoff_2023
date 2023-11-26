@@ -1,13 +1,22 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class RandomEventManager : MonoBehaviour
 {
     public static event Action<EventData> RandomEventTriggered;
     
-    [SerializeField] EventData randomEvent;
-    [SerializeField] float eventDelay;
+    [SerializeField] List<EventData> positiveEvents;
+    [SerializeField] List<EventData> disasterEvents;
+    [SerializeField] List<EventData> choiceEvents;
+    
+    [SerializeField] float eventDelayMin;
+    [SerializeField] float eventDelayMax;
+
+    List<EventData> _usedEvents;
+    bool lastEventWasBad = false;
 
     void Start()
     {
@@ -16,8 +25,25 @@ public class RandomEventManager : MonoBehaviour
 
     IEnumerator RandomEventRoutine()
     {
-        yield return new WaitForSeconds(eventDelay);
-        TriggerEvent(randomEvent);
+        EventData currentEvent = PickEvent();
+        float toNextEvent = Random.Range(eventDelayMin, eventDelayMax);
+        yield return new WaitForSeconds(toNextEvent);
+        TriggerEvent(currentEvent);
+    }
+
+    EventData PickEvent()
+    {
+        if (Random.value < 0.66 && !lastEventWasBad)
+        {
+            lastEventWasBad = true;
+            return Utils.PickRandomFromList(disasterEvents);
+        }
+        else
+        {
+            var eventType = (Random.value < 0.5) ? positiveEvents : choiceEvents;
+            lastEventWasBad = false;
+            return Utils.PickRandomFromList(eventType);
+        }
     }
 
     void TriggerEvent(EventData eventData)
