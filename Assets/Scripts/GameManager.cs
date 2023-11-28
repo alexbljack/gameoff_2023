@@ -24,6 +24,7 @@ public class Resource
     public void Change(int value)
     {
         _amount += value;
+        _amount = Mathf.Clamp(_amount, 0, 10000000);
         AmountChanged?.Invoke(this);
     }
 }
@@ -42,12 +43,19 @@ public class GameManager : MonoBehaviour
     public static event Action<int> PopulationChanged;
     public static event Action<int> HousingChanged;
     public static event Action<float> LoyaltyChanged; 
-
+    
+    [Header("Setup")]
     public List<ResourceHolder> resourceSetup;
-    public float populationIncreaseStep = 2;
+    public float startLoyalty = 75f;
+    public int startPopulation = 1;
+    
+    [Header("Population settings")]
+    public float populationIncreaseTimeStep = 2f;
+    public int populationIncreaseAmountPerStep = 1;
     public ResourceType foodResource;
     public int foodConsumptionPerCitizen = 1;
     public float foodConsumptionStep = 10;
+    public float loyaltyDecreaseOnFoodDeplete = 15f;
     public float housingLoyaltyDecreaseRate = 5f;
 
     [Header("UI")] 
@@ -84,6 +92,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        _loyalty = startLoyalty;
+        _population = startPopulation;
         StartCoroutine(PopulationRoutine());
         StartCoroutine(ConsumeFoodRoutine());
         InitUI();
@@ -101,8 +111,8 @@ public class GameManager : MonoBehaviour
     {
         while (!_gameOver)
         {
-            ChangePopulation(1);
-            yield return new WaitForSeconds(populationIncreaseStep);
+            ChangePopulation(populationIncreaseAmountPerStep);
+            yield return new WaitForSeconds(populationIncreaseTimeStep);
         }
     }
 
@@ -112,6 +122,10 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(foodConsumptionStep);
             int consumeAmount = _population * foodConsumptionPerCitizen;
+            if (consumeAmount > _resources[foodResource].Amount)
+            {
+                ChangeLoyalty(-loyaltyDecreaseOnFoodDeplete);
+            }
             _resources[foodResource].Change(-consumeAmount);
         }
     }
