@@ -1,7 +1,17 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
+
+
+[Serializable]
+public struct TileProb
+{
+    public TileType type;
+    public float probability;
+}
+
 
 public class MapTile : MonoBehaviour
 {
@@ -10,9 +20,7 @@ public class MapTile : MonoBehaviour
     public static event Action<MapTile> BuiltOnTile;
     public static event Action<ResourceType, int> SpentResourcesOnBuilding;
     
-    public TileType plain;
-    public TileType rocks;
-    public TileType forest;
+    public List<TileProb> tileProbabilities;
 
     SpriteRenderer _renderer;
 
@@ -45,10 +53,15 @@ public class MapTile : MonoBehaviour
 
     TileType ChooseTile()
     {
-        float dice = Random.value;
-        if (dice < 0.1) { return rocks; }
-        if (dice >= 0.1 && dice < 0.5) { return forest; }
-        return plain;
+        var tilesToChoose = new List<TileType>();
+        foreach (TileProb tileProb in tileProbabilities)
+        {
+            for (var i = 0; i < tileProb.probability * 100; i++)
+            {
+                tilesToChoose.Add(tileProb.type);
+            }
+        }
+        return Utils.PickRandomFromList(tilesToChoose);
     }
 
     public void Build(BuildingType building)

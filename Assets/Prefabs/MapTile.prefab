@@ -46,9 +46,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8de7da50e1104436896017c9e2d60eca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plain: {fileID: 11400000, guid: 5ef6a1ee30bc64b16989de1ca2d0ad24, type: 2}
-  rocks: {fileID: 11400000, guid: c97a950ac42424f229f3f56b8df988f2, type: 2}
-  forest: {fileID: 11400000, guid: c3f36869c41e04a0282de74c7ff6c654, type: 2}
+  tileProbabilities:
+  - type: {fileID: 11400000, guid: 233b56b78342a4fc1a1f21b61aefe150, type: 2}
+    probability: 0.15
+  - type: {fileID: 11400000, guid: c3f36869c41e04a0282de74c7ff6c654, type: 2}
+    probability: 0.2
+  - type: {fileID: 11400000, guid: 5ef6a1ee30bc64b16989de1ca2d0ad24, type: 2}
+    probability: 0.4
+  - type: {fileID: 11400000, guid: c97a950ac42424f229f3f56b8df988f2, type: 2}
+    probability: 0.15
+  - type: {fileID: 11400000, guid: 3f99181ef868048c7aa904db3545ad2f, type: 2}
+    probability: 0.05
 --- !u!212 &4745938659028002045
 SpriteRenderer:
   m_ObjectHideFlags: 0
