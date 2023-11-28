@@ -1,4 +1,4 @@
-using System;
+using UnityEngine.UI;
 using System.Collections;
 using UnityEngine;
 
@@ -7,6 +7,7 @@ public class Construction : MonoBehaviour
     [SerializeField] GameObject buildingPrefab;
     [SerializeField] BuildingType buildingType;
     [SerializeField] MapTile tile;
+    [SerializeField] Slider _construction;
     
     public void Build(BuildingType building, MapTile mapTile)
     {
@@ -19,9 +20,12 @@ public class Construction : MonoBehaviour
     {
         float timePassed = 0;
         float buildTime = buildingType.TimeToBuild;
+        _construction.maxValue = buildTime;
         while (timePassed < buildTime)
         {
-            timePassed += Time.deltaTime;
+            var _time = Time.deltaTime;
+            _construction.value += _time;
+            timePassed += _time;
             yield return null;
         }
         GameObject building = Instantiate(buildingPrefab);

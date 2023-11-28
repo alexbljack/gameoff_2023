@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60db4eef2f2f2427d964ee7c054e99ae, type: 3}
   m_Name: Barracks
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 693739c66c5a44bc9a500b75607373ea, type: 3}
+  image: {fileID: 21300000, guid: 43c86734043ce4d56bb7ed2d0d89fd45, type: 3}
   timeToBuild: 1
   cost: []
   resources: []

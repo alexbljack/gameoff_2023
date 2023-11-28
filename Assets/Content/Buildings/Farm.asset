@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: Farm
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 1de2e0e9b983b4c78af977a07e62c996, type: 3}
-  timeToBuild: 1
-  cost: []
+  timeToBuild: 21
+  cost:
+  - resource: {fileID: 11400000, guid: 2024c4a819e6147c7ae07f5df5c822f9, type: 2}
+    cost: 24
+  - resource: {fileID: 11400000, guid: 6cf8f0f4c31ae452ab424642ed264610, type: 2}
+    cost: 10
   resources:
   - resource: {fileID: 11400000, guid: 03b46d58e7276440cb9981df843947d3, type: 2}
-    amount: 10
-    timeStep: 3.5
+    amount: 1
+    timeStep: 10
   housing: 0
