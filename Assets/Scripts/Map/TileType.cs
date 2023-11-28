@@ -6,6 +6,7 @@ public class TileType : ScriptableObject
 {
     public List<Sprite> tiles;
     public List<BuildingType> buildingsAvailable;
+    public Sprite resourceIcon;
 
     public Sprite PickRandom()
     {

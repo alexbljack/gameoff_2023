@@ -80,7 +80,6 @@ public class BuildCursor : MonoBehaviour
     void OnEnterTile(MapTile tile)
     {
         _overTile = tile;
-        Debug.Log(_overTile);
         Highlight(tile.CanBuild(_building));
     }
 }

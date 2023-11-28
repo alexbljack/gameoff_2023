@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using Random = UnityEngine.Random;
-
 
 [Serializable]
 public struct TileProb
@@ -19,7 +17,8 @@ public class MapTile : MonoBehaviour
     public static event Action<MapTile> CursorLeftTile; 
     public static event Action<MapTile> BuiltOnTile;
     public static event Action<ResourceType, int> SpentResourcesOnBuilding;
-    
+
+    [SerializeField] SpriteRenderer resourceIcon;
     public List<TileProb> tileProbabilities;
 
     SpriteRenderer _renderer;
@@ -42,6 +41,7 @@ public class MapTile : MonoBehaviour
     void Awake()
     {
         _renderer = GetComponent<SpriteRenderer>();
+        resourceIcon.gameObject.SetActive(false);
     }
 
     public void Open()
@@ -49,6 +49,11 @@ public class MapTile : MonoBehaviour
         _opened = true;
         _type = ChooseTile();
         _renderer.sprite = _type.PickRandom();
+        if (_type.resourceIcon != null)
+        {
+            resourceIcon.sprite = _type.resourceIcon;
+            resourceIcon.gameObject.SetActive(true);
+        }
     }
 
     TileType ChooseTile()
@@ -72,6 +77,7 @@ public class MapTile : MonoBehaviour
         obj.transform.SetParent(gameObject.transform);
         obj.GetComponent<Construction>().Build(building, this);
         _occupied = true;
+        resourceIcon.gameObject.SetActive(false);
         foreach (var cost in building.Cost)
         {
             SpentResourcesOnBuilding?.Invoke(cost.resource, -cost.cost);

@@ -17,3 +17,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 21ee6fa2956a64a66a2fa77d8fecf5e7, type: 3}
   buildingsAvailable:
   - {fileID: 11400000, guid: c8bf625f0a18e4a99a7fb9e34a549358, type: 2}
+  resourceIcon: {fileID: 21300000, guid: 0f9e597c023e748a28ef816ff69cae60, type: 3}
