@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TMPro;
 using Random = UnityEngine.Random;
 
 public class Resource
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] PopulationInfo populationUI;
     [SerializeField] LoyaltyInfo loyaltyUI;
     [SerializeField] EventModal eventModal;
+    [SerializeField] TMP_Text kingdomName;
     
     int _population = 1;
     float _loyalty = 50f;
@@ -72,6 +74,7 @@ public class GameManager : MonoBehaviour
     
     void Awake()
     {
+        kingdomName.text = PlayerPrefs.GetString("KingdomName");
         _resources = new Dictionary<ResourceType, Resource>();
         foreach (ResourceHolder res in resourceSetup)
         {
