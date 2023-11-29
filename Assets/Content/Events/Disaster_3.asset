@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81ba983053114741930dfafc19ce5bf1, type: 3}
+  m_Name: Disaster_3
+  m_EditorClassIdentifier: 
+  eventText:
+  - A thunderstorm passed at night. Lightning struck the sawmill. The plot is completely
+    burnt out, Mylord...
+  - The summer turned out to be dry. A fire broke out at one of the sites. The sawmill
+    burned down, Mylord...
+  - They say that the loggers did not share the axe. And then the sawmill burned
+    down, Mylord...
+  choices:
+  - choiceText: It's God's will
+    loyaltyChange: -5
+    populationChange: -3
+    destroyBuilding: {fileID: 11400000, guid: c8bf625f0a18e4a99a7fb9e34a549358, type: 2}
+    resources: []
