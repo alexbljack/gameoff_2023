@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81ba983053114741930dfafc19ce5bf1, type: 3}
+  m_Name: Conflict_4
+  m_EditorClassIdentifier: 
+  eventText:
+  - There are twice as many brothels in one of your cities as there are temples.
+    People are mired in vice and debauchery. There are rumors that the population
+    copulates right on the streets, Mylord...
+  - The city was gripped by drunkenness. The taverns are crowded. People drink from
+    morning till night. Nobody wants to work, Mylord...
+  choices:
+  - choiceText: Send the Inquisition
+    loyaltyChange: 5
+    populationChange: -3
+    destroyBuilding: {fileID: 0}
+    resources:
+    - resource: {fileID: 11400000, guid: 2024c4a819e6147c7ae07f5df5c822f9, type: 2}
+      amount: 20
+  - choiceText: Take part
+    loyaltyChange: -15
+    populationChange: -5
+    destroyBuilding: {fileID: 11400000, guid: cd4ea35a1f9944065b9bedd4ff340b9e, type: 2}
+    resources:
+    - resource: {fileID: 11400000, guid: 2024c4a819e6147c7ae07f5df5c822f9, type: 2}
+      amount: -120

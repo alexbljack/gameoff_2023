@@ -10,18 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81ba983053114741930dfafc19ce5bf1, type: 3}
-  m_Name: Event_1
+  m_Name: Conflict_2
   m_EditorClassIdentifier: 
   eventText:
-  - YOUR DIED
-  - Heaven shall burrn!
+  - Robbers attacked our possessions, Mylord...
   choices:
-  - choiceText: Drink heal potion
-    loyaltyChange: -10
-    populationChange: -2
-    destroyBuilding: {fileID: 11400000, guid: c8bf625f0a18e4a99a7fb9e34a549358, type: 2}
+  - choiceText: Send soldiers to protect
+    loyaltyChange: 5
+    populationChange: 0
+    destroyBuilding: {fileID: 0}
     resources:
     - resource: {fileID: 11400000, guid: 2024c4a819e6147c7ae07f5df5c822f9, type: 2}
-      amount: -100
-    - resource: {fileID: 11400000, guid: 6cf8f0f4c31ae452ab424642ed264610, type: 2}
-      amount: 200
+      amount: -50
+  - choiceText: Convince people to be patient
+    loyaltyChange: -5
+    populationChange: -2
+    destroyBuilding: {fileID: 11400000, guid: cd4ea35a1f9944065b9bedd4ff340b9e, type: 2}
+    resources: []
