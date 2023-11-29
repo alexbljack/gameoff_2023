@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Disaster_1
   m_EditorClassIdentifier: 
   eventText:
-  - The city was gripped by drunkenness. The taverns are crowded. People drink from
-    morning till night. Nobody wants to work, Mylord...
+  - People believe that you have an invisible assistant who helps you in running
+    the kingdom. This causes nervousness and distrust among the population, Mylord...
   choices:
   - choiceText: It's God's will
     loyaltyChange: -8
