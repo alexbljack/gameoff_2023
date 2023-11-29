@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     [Header("Setup")]
     public List<ResourceHolder> resourceSetup;
     public float startLoyalty = 75f;
-    public int startPopulation = 1;
+    public int startPopulation = 3;
     public float secondsPerYear = 60f;
     
     [Header("Population settings")]
@@ -57,8 +57,9 @@ public class GameManager : MonoBehaviour
     public ResourceType foodResource;
     public int foodConsumptionPerCitizen = 1;
     public float foodConsumptionStep = 10;
-    public float loyaltyDecreaseOnFoodDeplete = 15f;
-    public float housingLoyaltyDecreaseRate = 5f;
+    public float defaultPositiveLoyaltyRate = 1f;
+    public float foodDecreaseCoef = 2f;
+    public float housingDecreaseCoef = 1f;
 
     [Header("UI")] 
     [SerializeField] PopulationInfo populationUI;
@@ -76,6 +77,7 @@ public class GameManager : MonoBehaviour
 
     bool _gameOver = false;
     bool _paused = false;
+    bool _isFoodShortage = false;
     IEnumerator _alertRoutine;
 
     Account account;
@@ -112,12 +114,30 @@ public class GameManager : MonoBehaviour
         InitUI();
     }
 
+    float GetLoyalityDescreaseRate() 
+    {
+        var _default = defaultPositiveLoyaltyRate;
+        if (Population > Housing && _isFoodShortage)
+        {
+            _default = -1f;
+            _default *= (housingDecreaseCoef + foodDecreaseCoef);
+        }
+        else if (Population > Housing) 
+        {
+            _default = -1f;
+            _default *= housingDecreaseCoef;
+        }
+        else if (_isFoodShortage)
+        {
+            _default = -1f;
+            _default *= foodDecreaseCoef;
+        }
+        return _default * Time.deltaTime;
+    }
+
     void Update()
     {
-        if (Population > Housing)
-        {
-            ChangeLoyalty(-housingLoyaltyDecreaseRate * Time.deltaTime);
-        }
+        ChangeLoyalty(GetLoyalityDescreaseRate());
     }
 
     void GameOver(int result) 
@@ -135,7 +155,8 @@ public class GameManager : MonoBehaviour
     {
         while (!_gameOver)
         {
-            ChangePopulation(populationIncreaseAmountPerStep);
+            var value = populationIncreaseAmountPerStep * (_yearsOnThrone != 0 ? _yearsOnThrone : 1);
+            ChangePopulation(value);
             yield return new WaitForSeconds(populationIncreaseTimeStep);
         }
     }
@@ -146,10 +167,7 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(foodConsumptionStep);
             int consumeAmount = _population * foodConsumptionPerCitizen;
-            if (consumeAmount > _resources[foodResource].Amount)
-            {
-                ChangeLoyalty(-loyaltyDecreaseOnFoodDeplete);
-            }
+            _isFoodShortage = consumeAmount > _resources[foodResource].Amount;
             _resources[foodResource].Change(-consumeAmount);
         }
     }
