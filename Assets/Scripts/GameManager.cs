@@ -66,15 +66,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] EventModal eventModal;
     [SerializeField] TMP_Text kingdomName;
     [SerializeField] TMP_Text yearsOnThrone;
+    [SerializeField] GameObject notEnoughResourcesMsg;
 
     int _yearsOnThrone = 0;
 
     int _population = 1;
     float _loyalty = 50f;
     Dictionary<ResourceType, Resource> _resources;
-    
+
     bool _gameOver = false;
     bool _paused = false;
+    IEnumerator _alertRoutine;
 
     Account account;
     
@@ -175,6 +177,7 @@ public class GameManager : MonoBehaviour
         Building.BuildingCreated += OnBuildingCreated;
         RandomEventManager.RandomEventTriggered += OnRandomEvent;
         EventChoiceButton.EventOutcomeSelected += OnEventChoice;
+        BuildCursor.NotEnoughResources += OnNotEnoughResources;
     }
 
     void OnDisable()
@@ -184,6 +187,7 @@ public class GameManager : MonoBehaviour
         Building.BuildingCreated -= OnBuildingCreated;
         RandomEventManager.RandomEventTriggered -= OnRandomEvent;
         EventChoiceButton.EventOutcomeSelected -= OnEventChoice;
+        BuildCursor.NotEnoughResources -= OnNotEnoughResources;
     }
 
     void ChangeResource(ResourceType resource, int amount)
@@ -238,5 +242,22 @@ public class GameManager : MonoBehaviour
                 building.DestroyBuilding();
             }
         }
+    }
+
+    void OnNotEnoughResources()
+    {
+        if (_alertRoutine != null)
+        {
+            StopCoroutine(_alertRoutine);
+        }
+        _alertRoutine = AlertBoxRoutine();
+        StartCoroutine(_alertRoutine);
+    }
+
+    IEnumerator AlertBoxRoutine()
+    {
+        notEnoughResourcesMsg.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1);
+        notEnoughResourcesMsg.gameObject.SetActive(false);
     }
 }

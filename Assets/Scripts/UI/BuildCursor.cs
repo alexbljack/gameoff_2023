@@ -1,7 +1,11 @@
+using System;
 using UnityEngine;
 
 public class BuildCursor : MonoBehaviour
 {
+    public static event Action NotEnoughResources;
+    [SerializeField] GameManager game;
+
     SpriteRenderer _rndr;
     BuildingType _building;
     MapTile _overTile;
@@ -49,6 +53,11 @@ public class BuildCursor : MonoBehaviour
     {
         if (_overTile != null && _overTile.CanBuild(_building))
         {
+            if (!IsEnoughResources())
+            {
+                NotEnoughResources?.Invoke();
+                return;
+            }
             _overTile.Build(_building);
         }
         else
@@ -81,5 +90,18 @@ public class BuildCursor : MonoBehaviour
     {
         _overTile = tile;
         Highlight(tile.CanBuild(_building));
+    }
+
+    bool IsEnoughResources()
+    {
+        foreach (ResourceCost cost in _building.Cost)
+        {
+            int current = game.Resources[cost.resource].Amount;
+            if (current < cost.cost)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
