@@ -521,7 +521,7 @@ MonoBehaviour:
     startValue: 15
   startLoyalty: 75
   startPopulation: 1
-  secondsPerYear: 10
+  secondsPerYear: 60
   populationIncreaseTimeStep: 2
   populationIncreaseAmountPerStep: 1
   foodResource: {fileID: 11400000, guid: 03b46d58e7276440cb9981df843947d3, type: 2}
@@ -533,7 +533,7 @@ MonoBehaviour:
   loyaltyUI: {fileID: 2039692292}
   eventModal: {fileID: 904650451}
   kingdomName: {fileID: 1836750846}
-  yearsOnThrone: {fileID: 1001503497}
+  yearsOnThrone: {fileID: 0}
 --- !u!4 &212280025
 Transform:
   m_ObjectHideFlags: 0
@@ -992,7 +992,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c6fe93d139a24739a4e947379eaa33b, type: 3}
   m_Name: 
@@ -1370,11 +1370,11 @@ RectTransform:
   m_Children:
   - {fileID: 906764119}
   - {fileID: 1735297537}
-  - {fileID: 950673476}
   - {fileID: 646342426}
   - {fileID: 2039692291}
   - {fileID: 1836750845}
   - {fileID: 1001503496}
+  - {fileID: 950673476}
   m_Father: {fileID: 1894656919}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
@@ -2170,7 +2170,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c8bf625f0a18e4a99a7fb9e34a549358, type: 2}
   - {fileID: 11400000, guid: ca084bd7ed764402eb794e10f2181265, type: 2}
   - {fileID: 11400000, guid: 13f23984a0511405a947a6905166e68f, type: 2}
-  - {fileID: 11400000, guid: d7e53398a592546708cd54544a150701, type: 2}
   buildButtonPrefab: {fileID: 2085750402786360693, guid: 4e92671beba1f4d328debe108a5e026e, type: 3}
 --- !u!1 &1001503495
 GameObject:
