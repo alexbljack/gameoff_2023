@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 using Random = UnityEngine.Random;
 
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
     public List<ResourceHolder> resourceSetup;
     public float startLoyalty = 75f;
     public int startPopulation = 1;
+    public float secondsPerYear = 60f;
     
     [Header("Population settings")]
     public float populationIncreaseTimeStep = 2f;
@@ -63,13 +65,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] LoyaltyInfo loyaltyUI;
     [SerializeField] EventModal eventModal;
     [SerializeField] TMP_Text kingdomName;
-    
+    [SerializeField] TMP_Text yearsOnThrone;
+
+    int _yearsOnThrone = 0;
+
     int _population = 1;
     float _loyalty = 50f;
     Dictionary<ResourceType, Resource> _resources;
     
     bool _gameOver = false;
     bool _paused = false;
+
+    Account account;
     
     public Dictionary<ResourceType, Resource> Resources => _resources;
     public int Population => _population;
@@ -82,7 +89,9 @@ public class GameManager : MonoBehaviour
     
     void Awake()
     {
-        kingdomName.text = PlayerPrefs.GetString("KingdomName");
+        account = FindAnyObjectByType<Account>();
+        if (account != null)
+            kingdomName.text = account.KingdomName;
         _resources = new Dictionary<ResourceType, Resource>();
         foreach (ResourceHolder res in resourceSetup)
         {
@@ -94,8 +103,10 @@ public class GameManager : MonoBehaviour
     {
         _loyalty = startLoyalty;
         _population = startPopulation;
+        loyaltyUI.EndOfLoyalty += GameOver;
         StartCoroutine(PopulationRoutine());
         StartCoroutine(ConsumeFoodRoutine());
+        StartCoroutine(YearsChangeRoutine());
         InitUI();
     }
 
@@ -105,6 +116,17 @@ public class GameManager : MonoBehaviour
         {
             ChangeLoyalty(-housingLoyaltyDecreaseRate * Time.deltaTime);
         }
+    }
+
+    void GameOver(int result) 
+    {
+        _gameOver = true;
+        if (account != null)
+        {
+            account.GameResult = result;
+            account.YearsOnThrone = _yearsOnThrone;
+        }
+        SceneManager.LoadScene(2);
     }
 
     IEnumerator PopulationRoutine()
@@ -127,6 +149,16 @@ public class GameManager : MonoBehaviour
                 ChangeLoyalty(-loyaltyDecreaseOnFoodDeplete);
             }
             _resources[foodResource].Change(-consumeAmount);
+        }
+    }
+
+    IEnumerator YearsChangeRoutine() 
+    {
+        while (!_gameOver)
+        {
+            yearsOnThrone.text = $"{_yearsOnThrone} years";
+            yield return new WaitForSeconds(secondsPerYear);
+            _yearsOnThrone++;
         }
     }
 
