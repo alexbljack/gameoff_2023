@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 public class Resource
 {
-    public static event Action<Resource> AmountChanged;
+    public static event Action<Resource, int> AmountChanged;
     public int Amount => _amount;
     public ResourceType Type => _type;
     
@@ -26,7 +26,7 @@ public class Resource
     {
         _amount += value;
         _amount = Mathf.Clamp(_amount, 0, 10000000);
-        AmountChanged?.Invoke(this);
+        AmountChanged?.Invoke(this, value);
     }
 }
 
