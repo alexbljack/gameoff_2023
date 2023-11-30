@@ -37,7 +37,7 @@ public class BuildButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         _image.sprite = buildingType.Image;
 
         ResourceGenerator income = building.Resources[0];
-        incomeText.text = $"+{income.RatePerMin().ToString()}";
+        incomeText.text = $"{income.RatePerMin().ToString()}";
         incomeResource.sprite = income.resource.icon;
 
         foreach (ResourceCost cost in building.Cost)
