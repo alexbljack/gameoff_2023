@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text kingdomName;
     [SerializeField] TMP_Text yearsOnThrone;
     [SerializeField] GameObject notEnoughResourcesMsg;
+    [SerializeField] GameObject acceptLightbox;
 
     int _yearsOnThrone = 0;
 
@@ -277,5 +278,25 @@ public class GameManager : MonoBehaviour
         notEnoughResourcesMsg.gameObject.SetActive(true);
         yield return new WaitForSeconds(1);
         notEnoughResourcesMsg.gameObject.SetActive(false);
+    }
+
+    public void ShowAcceptLightbox() 
+    {
+        //ToDo: Саня, нужна пауза сюда
+
+        acceptLightbox.SetActive(true);
+    }
+
+    public void CloseAcceptLightbox()
+    {
+        //ToDo: Саня, нужно тут потом распаузить
+
+        acceptLightbox.SetActive(false);
+    }
+
+    public void CloseSession() 
+    {
+        account.ClearData();
+        SceneManager.LoadScene(0);
     }
 }

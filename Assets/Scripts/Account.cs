@@ -19,6 +19,13 @@ public class Account : MonoBehaviour
     public int GameResult;
     public int YearsOnThrone;
 
+    public void ClearData() 
+    {
+        KingdomName = "";
+        GameResult = 0;
+        YearsOnThrone = 0;
+    }
+
     public void SaveData() 
     {
         var accPath = $"{Application.persistentDataPath}/Account/";

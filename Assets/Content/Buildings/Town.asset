@@ -23,6 +23,6 @@ MonoBehaviour:
     cost: 9
   resources:
   - resource: {fileID: 11400000, guid: 2024c4a819e6147c7ae07f5df5c822f9, type: 2}
-    amount: 5
+    amount: 7
     timeStep: 5
-  housing: 15
+  housing: 20

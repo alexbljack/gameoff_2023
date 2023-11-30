@@ -13,6 +13,8 @@ public class Building : MonoBehaviour
     
     public BuildingType buildingType;
 
+    [SerializeField] GameObject PoofEffect;
+
     SpriteRenderer _rndr;
     bool _generatingResources = true;
     MapTile _tile;
@@ -49,6 +51,7 @@ public class Building : MonoBehaviour
     {
         BuildingDestroyed?.Invoke();
         _tile.Free();
+        Instantiate(PoofEffect, position: gameObject.transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }
