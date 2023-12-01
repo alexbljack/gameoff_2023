@@ -132,6 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceIcon: {fileID: 546926217508118059}
+  Construction: {fileID: 3935899240256187808, guid: 9aecfd209e9b8433a9591122a1c6659e, type: 3}
   tileProbabilities:
   - type: {fileID: 11400000, guid: 233b56b78342a4fc1a1f21b61aefe150, type: 2}
     probability: 0.15

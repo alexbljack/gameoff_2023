@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 [Serializable]
@@ -19,6 +18,7 @@ public class MapTile : MonoBehaviour
     public static event Action<ResourceType, int> SpentResourcesOnBuilding;
 
     [SerializeField] SpriteRenderer resourceIcon;
+    [SerializeField] GameObject Construction;
     public List<TileProb> tileProbabilities;
 
     SpriteRenderer _renderer;
@@ -70,9 +70,8 @@ public class MapTile : MonoBehaviour
     }
 
     public void Build(BuildingType building)
-    {
-        GameObject construction = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Buildings/Construction.prefab"); 
-        GameObject obj = Instantiate(construction);
+    { 
+        GameObject obj = Instantiate(Construction);
         obj.transform.position = transform.position;
         obj.transform.SetParent(gameObject.transform);
         obj.GetComponent<Construction>().Build(building, this);
