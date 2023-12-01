@@ -115,6 +115,16 @@ public class GameManager : MonoBehaviour
         InitUI();
     }
 
+    void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    void ResumeGame()
+    {
+        Time.timeScale = 1;
+    }
+
     float GetLoyalityDescreaseRate() 
     {
         var _default = defaultPositiveLoyaltyRate;
@@ -242,7 +252,7 @@ public class GameManager : MonoBehaviour
     {
         eventModal.gameObject.SetActive(true);
         eventModal.BuildEventWindow(eventData);
-        
+        PauseGame();
     }
 
     void OnEventChoice(EventChoice choice)
@@ -251,7 +261,9 @@ public class GameManager : MonoBehaviour
         ChangePopulation(choice.populationChange);
         ChangeLoyalty(choice.loyaltyChange);
         eventModal.gameObject.SetActive(false);
-
+        
+        ResumeGame();
+        
         if (choice.destroyBuilding)
         {
             var buildings = Buildings.FindAll(b => b.buildingType == choice.destroyBuilding);
@@ -282,15 +294,13 @@ public class GameManager : MonoBehaviour
 
     public void ShowAcceptLightbox() 
     {
-        //ToDo: Саня, нужна пауза сюда
-
+        PauseGame();
         acceptLightbox.SetActive(true);
     }
 
     public void CloseAcceptLightbox()
     {
-        //ToDo: Саня, нужно тут потом распаузить
-
+        ResumeGame();
         acceptLightbox.SetActive(false);
     }
 

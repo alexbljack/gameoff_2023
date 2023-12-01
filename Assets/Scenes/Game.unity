@@ -797,8 +797,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bcd2386e3ee906b4585eb7d5cb69d87b, type: 2}
   - {fileID: 11400000, guid: 4a7e7bda20d5d75448c92dd469206bd5, type: 2}
   - {fileID: 11400000, guid: 3c3a779d69375f3478bd1b1ac1531b55, type: 2}
-  eventDelayMin: 5
-  eventDelayMax: 10
+  eventDelayMin: 15
+  eventDelayMax: 20
 --- !u!1001 &447053301
 PrefabInstance:
   m_ObjectHideFlags: 0
