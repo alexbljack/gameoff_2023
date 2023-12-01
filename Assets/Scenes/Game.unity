@@ -1246,6 +1246,7 @@ MonoBehaviour:
   moveSpeed: 10
   activeBorderWidth: 0.005
   screenDeadZone: 0.15
+  grid: {fileID: 836587835}
 --- !u!1 &520941615
 GameObject:
   m_ObjectHideFlags: 0
@@ -2363,7 +2364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 1970340084322309696, guid: af0099cc34ddc4d17a24553786c60980, type: 3}
   selector: {fileID: 65517890}
-  mapSize: {x: 32, y: 24}
+  mapSize: {x: 50, y: 36}
 --- !u!1 &890973154
 GameObject:
   m_ObjectHideFlags: 0
