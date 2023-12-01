@@ -13,6 +13,8 @@ public class BuildButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] Image incomeResource;
     [SerializeField] GameObject resourcePricePrefab;
     [SerializeField] Transform priceContainer;
+    [SerializeField] GameObject housingPanel;
+    [SerializeField] TextMeshProUGUI housingText;
     
     public static event Action<BuildingType> BuildButtonClicked;
 
@@ -45,6 +47,12 @@ public class BuildButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             var costObj = Instantiate(resourcePricePrefab);
             costObj.transform.SetParent(priceContainer);
             costObj.GetComponent<ResourcePrice>().Init(cost);
+        }
+
+        if (building.Housing > 0)
+        {
+            housingPanel.SetActive(true);
+            housingText.text = $"+{building.Housing}";
         }
     }
 
