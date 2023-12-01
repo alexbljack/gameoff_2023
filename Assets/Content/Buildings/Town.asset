@@ -16,11 +16,11 @@ MonoBehaviour:
   timeToBuild: 27
   cost:
   - resource: {fileID: 11400000, guid: 2024c4a819e6147c7ae07f5df5c822f9, type: 2}
-    cost: 30
+    cost: 40
   - resource: {fileID: 11400000, guid: 6cf8f0f4c31ae452ab424642ed264610, type: 2}
-    cost: 12
+    cost: 20
   - resource: {fileID: 11400000, guid: 3427d05086da24d7085e598b7ca65094, type: 2}
-    cost: 9
+    cost: 12
   resources:
   - resource: {fileID: 11400000, guid: 2024c4a819e6147c7ae07f5df5c822f9, type: 2}
     amount: 7
