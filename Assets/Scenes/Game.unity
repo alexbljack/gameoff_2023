@@ -734,11 +734,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceSetup:
   - type: {fileID: 11400000, guid: 2024c4a819e6147c7ae07f5df5c822f9, type: 2}
-    startValue: 150
+    startValue: 70
   - type: {fileID: 11400000, guid: 6cf8f0f4c31ae452ab424642ed264610, type: 2}
-    startValue: 30
+    startValue: 18
   - type: {fileID: 11400000, guid: 3427d05086da24d7085e598b7ca65094, type: 2}
-    startValue: 30
+    startValue: 15
   - type: {fileID: 11400000, guid: 03b46d58e7276440cb9981df843947d3, type: 2}
     startValue: 50
   startLoyalty: 50
@@ -797,8 +797,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bcd2386e3ee906b4585eb7d5cb69d87b, type: 2}
   - {fileID: 11400000, guid: 4a7e7bda20d5d75448c92dd469206bd5, type: 2}
   - {fileID: 11400000, guid: 3c3a779d69375f3478bd1b1ac1531b55, type: 2}
-  eventDelayMin: 5
-  eventDelayMax: 10
+  eventDelayMin: 15
+  eventDelayMax: 20
 --- !u!1001 &447053301
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2363,7 +2363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 1970340084322309696, guid: af0099cc34ddc4d17a24553786c60980, type: 3}
   selector: {fileID: 65517890}
-  mapSize: {x: 32, y: 24}
+  mapSize: {x: 40, y: 30}
 --- !u!1 &890973154
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,8 +19,10 @@ MonoBehaviour:
     cost: 24
   - resource: {fileID: 11400000, guid: 6cf8f0f4c31ae452ab424642ed264610, type: 2}
     cost: 10
+  - resource: {fileID: 11400000, guid: 3427d05086da24d7085e598b7ca65094, type: 2}
+    cost: 4
   resources:
   - resource: {fileID: 11400000, guid: 03b46d58e7276440cb9981df843947d3, type: 2}
-    amount: 1
+    amount: 2
     timeStep: 10
   housing: 0
