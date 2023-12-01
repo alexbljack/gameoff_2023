@@ -41,8 +41,7 @@ public struct ResourceHolder
 
 public class GameManager : MonoBehaviour
 {
-    public static event Action<int> PopulationChanged;
-    public static event Action<int> HousingChanged;
+    public static event Action<int, int> PopulationChanged;
     public static event Action<float> LoyaltyChanged; 
     
     [Header("Setup")]
@@ -203,7 +202,7 @@ public class GameManager : MonoBehaviour
     {
         Building.ResourceGenerated += OnChangeResource;
         MapTile.SpentResourcesOnBuilding += OnChangeResource;
-        Building.BuildingCreated += OnBuildingCreated;
+        // Building.BuildingCreated += OnBuildingCreated;
         RandomEventManager.RandomEventTriggered += OnRandomEvent;
         EventChoiceButton.EventOutcomeSelected += OnEventChoice;
         BuildCursor.NotEnoughResources += OnNotEnoughResources;
@@ -213,7 +212,7 @@ public class GameManager : MonoBehaviour
     {
         Building.ResourceGenerated -= OnChangeResource;
         MapTile.SpentResourcesOnBuilding -= OnChangeResource;
-        Building.BuildingCreated -= OnBuildingCreated;
+        // Building.BuildingCreated -= OnBuildingCreated;
         RandomEventManager.RandomEventTriggered -= OnRandomEvent;
         EventChoiceButton.EventOutcomeSelected -= OnEventChoice;
         BuildCursor.NotEnoughResources -= OnNotEnoughResources;
@@ -229,7 +228,7 @@ public class GameManager : MonoBehaviour
     void ChangePopulation(int amount)
     {
         _population += amount;
-        PopulationChanged?.Invoke(_population);
+        PopulationChanged?.Invoke(_population, amount);
     }
 
     void ChangeLoyalty(float amount)
@@ -241,11 +240,6 @@ public class GameManager : MonoBehaviour
     void OnChangeResource(ResourceType resource, int amount)
     {
         ChangeResource(resource, amount);
-    }
-
-    void OnBuildingCreated()
-    {
-        HousingChanged?.Invoke(Housing);
     }
 
     void OnRandomEvent(EventData eventData)

@@ -8,8 +8,8 @@ using UnityEngine.PlayerLoop;
 public class Building : MonoBehaviour
 {
     public static event Action<ResourceType, int> ResourceGenerated;
-    public static event Action BuildingCreated;
-    public static event Action BuildingDestroyed;
+    public static event Action<int> BuildingCreated;
+    public static event Action<int> BuildingDestroyed;
     
     public BuildingType buildingType;
 
@@ -29,7 +29,7 @@ public class Building : MonoBehaviour
         buildingType = building;
         _tile = tile;
         _rndr.sprite = buildingType.Image;
-        BuildingCreated?.Invoke();
+        BuildingCreated?.Invoke(building.Housing);
         
         foreach (ResourceGenerator generator in building.Resources)
         {
@@ -49,7 +49,7 @@ public class Building : MonoBehaviour
 
     public void DestroyBuilding()
     {
-        BuildingDestroyed?.Invoke();
+        BuildingDestroyed?.Invoke(-buildingType.Housing);
         _tile.Free();
         Instantiate(PoofEffect, position: gameObject.transform.position, Quaternion.identity);
         Destroy(gameObject);
